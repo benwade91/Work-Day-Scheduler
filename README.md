@@ -8,4 +8,4 @@ This app is used to create a daily schedule that stores inputs in the localstora
 colors of the cells change based on the time of day.
 
 ## Preview of Page
-![alt text](./images/screenShot.png?raw=true)
+![alt text](./Images/screenShot.png?raw=true)
