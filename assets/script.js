@@ -6,7 +6,7 @@ var saveTasks = function () {
 
 var loadTasks = function () {
     tasks = JSON.parse(localStorage.getItem("tasks"));
-
+    if (!tasks){ tasks = [];}
     $.each(tasks, function (e) {
         var lineId = $(this).attr("id");
         var lineText = $(this).attr("content");
@@ -44,19 +44,22 @@ $(".content").on("click", function () {
 
 $(".content").on("blur", "textarea", function () {
     var text = $(this).val();
+    if (text) {
+        var taskP = $("<p>")
+            .text(text);
 
-    var taskP = $("<p>")
-        .text(text);
+        $(this).replaceWith(taskP);
 
-    $(this).replaceWith(taskP);
-
-    var lineItem = {
-        content: text,
-        id: $(taskP).parent().parent().attr("id")
-    };
-
-    tasks.push(lineItem);
-    saveTasks();
+        var lineItem = {
+            content: text,
+            id: $(taskP).parent().parent().attr("id")
+        };
+        tasks.push(lineItem);
+        saveTasks();
+    } else {
+        var taskP = $("<p>");
+        $(this).replaceWith(taskP);
+    }
 });
 
 $(".saveBtn").on("click", function () {
@@ -76,8 +79,10 @@ $(".saveBtn").on("click", function () {
         tasks.push(lineItem);
         saveTasks();
     } else {
-        console.log("falsy");
-    }
+        var taskP = $("<p>");
+
+    $(".content textarea").replaceWith(taskP);
+}
 });
 
 $("#currentDay").text(moment().format('MMMM Do YYYY, h:mm a'));
